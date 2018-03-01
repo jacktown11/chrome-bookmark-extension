@@ -1,0 +1,78 @@
+div,input,ul,li{
+    margin: 0;
+    padding: 0;
+}
+.choosed{
+    background-color: #FFCC99;
+}
+
+body{
+    margin: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #336666;
+    font-family: 'Microsoft Yahei'
+}
+div.wrap{
+    width: 600px;
+    height: 550px;
+    margin: 0px 2px;
+    background-color: rgb(255,255,244);
+    overflow-y: hidden;
+}
+input{
+    text-align: center;
+    font-weight: bold;
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    border:none;
+    border-bottom: 2px solid #ccc;
+    height: 50px;
+    outline: none;
+    line-break: 50px;
+    font-size: 100%;
+    background: rgba(255,255,216,0.5);
+}
+ul{
+    list-style-type: none;
+    height: 500px;
+    width: 100%;
+    overflow-y: auto;
+}
+::-webkit-scrollbar-track-piece{
+    width:5px;
+    background-color:#fff ;  
+}
+::-webkit-scrollbar{
+    width:5px;
+    height:6px ; 
+}
+::-webkit-scrollbar-thumb{
+    height:50px;
+    background:#95bda1;   
+    cursor:pointer;
+}
+::-webkit-scrollbar-thumb:hover{
+    background:#95bda1;
+    cursor:pointer;
+}
+li{
+    padding: 5px 5px 4px 10px;
+    height: 50px;
+    line-height: 20px;
+    border-bottom: 1px dashed #ccc;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+span.bookmark-url{
+    font-size: 61.8%;
+    font-weight: normal;
+}
+span{
+    width: 90%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
