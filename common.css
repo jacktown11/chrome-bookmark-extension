@@ -64,10 +64,25 @@ li{
     border-bottom: 1px dashed #ccc;
     overflow: hidden;
     box-sizing: border-box;
+    position: relative;
+}
+li:hover{
+    cursor: pointer;
+    background-color: #FFCC99;
 }
 span.bookmark-url{
     font-size: 61.8%;
     font-weight: normal;
+}
+span.bookmark-route{
+    position: absolute;
+    display: block;
+    right: 0px;
+    top: 0px;
+    padding-top: 5px;
+    text-align: right;
+    color: #aaa;
+    font-size: 60%;
 }
 span{
     width: 90%;

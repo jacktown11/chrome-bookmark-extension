@@ -36,7 +36,8 @@
         }
     },
     BM = {
-        data: [], // 书签数据
+        data: [], // 书签数据(不含文件夹节点)
+        folder: {}, // 文件夹节点
         searchRes: {str: '', result: []},  // 书签搜索结果
         getBookmarkData (callback) {
             let self = this,
@@ -62,8 +63,15 @@
                 
                 // filter out file directory item
                 self.data = res.filter(function(item){
-                    return !item.children;
+                    if(!!item.children){
+                        self.folder[item.id] = item;
+                        return false;
+                    }else{
+                        return true;
+                    }
                 });
+
+                console.log(self.folder);
 
                 // get the visited number of each url
                 self.data.forEach(function(item){
@@ -113,11 +121,14 @@
         showSearchRes () {
             let ul = doc.getElementById('search-result'),
                 frag = doc.createDocumentFragment(),
-                res = this.searchRes.result;
-            res.forEach(function(item, index, arr){
+                res = this.searchRes.result,
+                self = this;
+            res.forEach(function(item, index){
                 let li = doc.createElement('li');
                 li.innerHTML = '<span class="bookmark-title">' +
-                        item.title +
+                        item.title + 
+                        '</span><span class="bookmark-route">' + 
+                        self.getParentArr(item).join(' / ') + 
                         '</span><br><span class="bookmark-url">' +
                         item.url +
                         '</span>';
@@ -140,6 +151,17 @@
                     this.data.concat();
             this.searchFrom(searchStr, src);
             this.showSearchRes();
+        },
+        getParentArr (node){
+            let parentArr = [];
+            while(node.parentId){
+                node = this.folder[node.parentId];
+                if(parseInt(node.id) > 1){
+                    // 0和1分别是更节点和“书签栏节点”
+                    parentArr.push(node.title);
+                }
+            }
+            return parentArr.reverse();
         }
     },
     App = {
@@ -196,6 +218,7 @@
         },
         setHandler(){
            let inputNode = doc.getElementById('search-input');
+           let searchRes = doc.getElementById('search-result');
            inputNode.addEventListener('input', ()=>{
                 let inputNode = doc.getElementById('search-input'),
                     searchStr = inputNode.value;
@@ -217,7 +240,15 @@
                     Utils.storeSet(url, (Utils.storeGet(url) || 0) + 1);
                     chrome.tabs.create({ url });
                }  
-           })
+           });
+           doc.addEventListener('click', (event) =>{
+               let li = event.target.tagName.toLowerCase() === 'span' ?
+                        event.target.parentNode : 
+                        event.target;
+                let url = li.getAttribute('data-url');
+                Utils.storeSet(url, (Utils.storeGet(url) || 0) + 1);
+                chrome.tabs.create({ url });
+           });
         }
     };
 
