@@ -68,7 +68,7 @@ li{
 }
 li:hover{
     cursor: pointer;
-    background-color: #FFCC99;
+    /* background-color: #FFCC99; */
 }
 span.bookmark-url{
     font-size: 61.8%;
