@@ -78,36 +78,32 @@
         searchFrom (searchStr, src) {
             // src 可能是整个书签或上次搜索结果数据
 
-            let targetStr = searchStr.trim(),
+            let keywordArr = searchStr.trim().toLowerCase().split(/\s+/).filter((item)=>item.length>0),
                 res,
                 storeGet = Utils.storeGet;
-            res = src.filter(function(item,index,arr){
-                let pos = (item.title + item.url)
-                        .toLowerCase()
-                        .indexOf(targetStr.toLowerCase());
-               if(pos === 0 && searchStr !== ''){
-                    item.goodMatch = true;
-                }else{
-                    item.goodMatch = false;
+            res = src.filter(function(item){
+                let score = 0;
+                let itemStr = (item.title+item.url).toLowerCase();
+                keywordArr.forEach((keyword) =>{
+                    if(itemStr.indexOf(keyword) > -1){
+                        score++;
+                    }
+                });
+                if(keywordArr.length===0){
+                    // search by empty string(catch all)
+                    score++;
                 }
-                return pos > -1;
+                item.score = score;
+                return score > 0;
             });
-            res.forEach(function(item,index, arr) {
+            res.forEach(function(item) {
                 item.visitedNum = storeGet(item.url);
             });
             res.sort(function(item1, item2){
-                if(item1.goodMatch){
-                    if(item2.goodMatch){
-                        return item2.visitedNum - item1.visitedNum;
-                    }else{
-                        return -1;
-                    }
+                if(item1.score !== item2.score){
+                    return item2.score - item1.score;
                 }else{
-                    if(item2.goodMatch){
-                        return 1;
-                    }else{
-                        return item2.visitedNum - item1.visitedNum;
-                    }
+                    return item2.visitedNum - item1.visitedNum;
                 }
             });
 
