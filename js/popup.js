@@ -71,8 +71,6 @@
                     }
                 });
 
-                console.log(self.folder);
-
                 // get the visited number of each url
                 self.data.forEach(function(item){
                     if (!storeGet(item.url)) {
@@ -90,18 +88,20 @@
                 res,
                 storeGet = Utils.storeGet;
             res = src.filter(function(item){
-                let score = 0;
+                let score = 0,
+                    len = keywordArr.length;
                 let itemStr = (item.title+item.url).toLowerCase();
                 keywordArr.forEach((keyword) =>{
                     if(itemStr.indexOf(keyword) > -1){
                         score++;
                     }
                 });
-                if(keywordArr.length===0){
+                if(len===0){
                     // search by empty string(catch all)
                     score++;
                 }
                 item.score = score;
+                item.isGoodMatch = item.score >= len;
                 return score > 0;
             });
             res.forEach(function(item) {
@@ -129,17 +129,20 @@
                         item.title + 
                         '</span><span class="bookmark-route">' + 
                         self.getParentArr(item).join(' / ') + 
-                        '</span><br><span class="bookmark-url">' +
-                        item.url +
+                        '&nbsp;</span><br><span class="bookmark-url">' +
+                        item.url + 
                         '</span>';
                 li.setAttribute('data-url', item.url);
                 li.setAttribute('data-pos', index);
+                if(item.isGoodMatch){
+                    Utils.addClass(li, 'good-match');
+                }
                 frag.appendChild(li);
             });
             ul.innerHTML = '';
             ul.appendChild(frag);
             if(ul.firstChild){
-                ul.firstChild.className = 'choosed';
+                Utils.addClass(ul.firstChild, 'choosed');
             }
         },
         search (searchStr){

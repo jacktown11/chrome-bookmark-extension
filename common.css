@@ -10,7 +10,8 @@ body{
     margin: 3px;
     font-size: 16px;
     font-weight: bold;
-    color: #336666;
+    color: #aaa;
+    /* color: #336666; */
     font-family: 'Microsoft Yahei'
 }
 div.wrap{
@@ -68,13 +69,16 @@ li{
 }
 li:hover{
     cursor: pointer;
-    /* background-color: #FFCC99; */
 }
-span.bookmark-url{
+.good-match{
+    color: #336666;
+}
+.bookmark-url,
+.bookmark-route{
     font-size: 61.8%;
     font-weight: normal;
 }
-span.bookmark-route{
+.bookmark-route{
     position: absolute;
     display: block;
     right: 0px;
@@ -82,7 +86,6 @@ span.bookmark-route{
     padding-top: 5px;
     text-align: right;
     color: #aaa;
-    font-size: 60%;
 }
 span{
     width: 90%;
