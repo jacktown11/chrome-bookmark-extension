@@ -127,9 +127,9 @@
                 let li = doc.createElement('li');
                 li.innerHTML = '<span class="bookmark-title">' +
                         item.title + 
-                        '</span><span class="bookmark-route">' + 
+                        '</span><div class="bookmark-route"><span>' + 
                         self.getParentArr(item).join(' / ') + 
-                        '&nbsp;</span><br><span class="bookmark-url">' +
+                        '<span></div><br><span class="bookmark-url">' +
                         item.url + 
                         '</span>';
                 li.setAttribute('data-url', item.url);
