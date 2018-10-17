@@ -245,9 +245,15 @@
                }  
            });
            doc.addEventListener('click', (event) =>{
-               let li = event.target.tagName.toLowerCase() === 'span' ?
-                        event.target.parentNode : 
-                        event.target;
+               let target = event.target;
+               let li;
+               if(target.tagName.toLowerCase() === 'li'){
+                   li = target;
+               }else if(target.parentNode.tagName.toLowerCase() === 'li'){
+                   li = target.parentNode;
+               }else{
+                   li = target.parentNode.parentNode;
+               }
                 let url = li.getAttribute('data-url');
                 Utils.storeSet(url, (Utils.storeGet(url) || 0) + 1);
                 chrome.tabs.create({ url });

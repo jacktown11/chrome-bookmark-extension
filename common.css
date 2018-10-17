@@ -70,12 +70,20 @@ li:hover{
     cursor: pointer;
 }
 .good-match{
-    color: #336666;
+    color: #366;
 }
 .bookmark-url,
 .bookmark-route{
     font-size: 61.8%;
     font-weight: normal;
+}
+.bookmark-title,
+.bookmark-url{
+    width: 90%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .bookmark-route{
     position: absolute;
@@ -87,15 +95,10 @@ li:hover{
 }
 .bookmark-route span{
     color: #ffc;
-    background-color: #009966;
+    background-color: #336666;
     border-radius: 2px;
     padding: 0px 2px;
 }
-.bookmark-title,
-.bookmark-url{
-    width: 90%;
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+li:not(.good-match) .bookmark-route span{
+    background-color: #aaa;
 }
